@@ -55,6 +55,7 @@ async def on_message(message):
 
     if content == '!broboard':
         leaderboard = json.dumps(bro_leaderboard)[1:-1]
+        leaderboard.replace(', ', '\n')
 
         await message.channel.send("```\n" + leaderboard + "\n```")
         return
