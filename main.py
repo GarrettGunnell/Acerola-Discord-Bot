@@ -11,11 +11,15 @@ help_message = "\
 \n\
 !respond:\n\
 \tSimulate a conversation with Acerola himself.\n\
+\n\
+!broboard:\n\
+\tSee who has said bro the most in the server.\
 ```\
 "
 
 def def_value():
     return 0
+    
 bro_leaderboard = defaultdict(def_value)
 
 TOKEN = open("token.txt","r").readline()
@@ -33,7 +37,7 @@ async def on_ready():
 async def on_message(message):
     content = message.content.lower()
     user = str(message.author).split('#')[0]
-    
+
     if message.author == client.user:
         return
 
