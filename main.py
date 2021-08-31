@@ -23,8 +23,13 @@ help_message = "\
 def def_value():
     return 0
 
-
 bro_leaderboard = defaultdict(def_value)
+
+with open('broboard.txt') as json_file:
+    bro_data = json.load(json_file)
+    for key, value in bro_data.items():
+        bro_leaderboard[key] = value
+
 
 TOKEN = open("token.txt","r").readline()
 
@@ -62,6 +67,8 @@ async def on_message(message):
 
     if 'bro' in content or 'vro' in content or 'bri' in content:
         bro_leaderboard[user] += 1
+        with open('broboard.txt', 'w') as outfile:
+            json.dump(bro_leaderboard, outfile)
 
     
 client.run(TOKEN)
