@@ -13,6 +13,16 @@ async def on_ready():
     print('Logged in')
 
 acerola_responses = ['nice', 'pog', 'damn that sucks', 'you should get some bitches', 'hell yeah']
+help_message = "\
+```\n\
+!help: \n\
+\tDisplays the commands supported by the bot.\n\
+\n\
+!respond:\n\
+\tSimulate a conversation with Acerola himself.\n\
+```\
+"
+
 
 @client.event
 async def on_message(message):
@@ -20,10 +30,6 @@ async def on_message(message):
         return
 
     if message.content == '!help':
-        help_message = "\
-        this is a help message \
-        "
-
         await message.channel.send(help_message)
         return
 
@@ -32,5 +38,4 @@ async def on_message(message):
         return
 
     
-
 client.run(TOKEN)
