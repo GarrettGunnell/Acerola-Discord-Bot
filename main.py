@@ -19,6 +19,14 @@ async def on_message(message):
     if message.author == client.user:
         return
 
+    if message.content == '!help':
+        help_message = "\
+        this is a help message \
+        "
+
+        await message.channel.send(help_message)
+        return
+
     if message.content == '!respond':
         await message.channel.send(random.choice(acerola_responses))
         return
