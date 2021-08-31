@@ -1,4 +1,5 @@
 import discord
+import random
 
 TOKEN = open("token.txt","r").readline()
 
@@ -9,13 +10,19 @@ client = discord.Client(intents = Intents)
 
 @client.event
 async def on_ready():
-    print('Logged in as {0.user}'.format(client))
+    print('Logged in')
+
+acerola_responses = ['nice', 'pog', 'damn that sucks', 'you should get some bitches', 'hell yeah']
 
 @client.event
 async def on_message(message):
     if message.author == client.user:
         return
 
-    await message.channel.send("shut the fuck up")
+    if message.content == '!respond':
+        await message.channel.send(random.choice(acerola_responses))
+        return
+
+    
 
 client.run(TOKEN)
