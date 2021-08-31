@@ -19,7 +19,8 @@ help_message = "\
 
 def def_value():
     return 0
-    
+
+
 bro_leaderboard = defaultdict(def_value)
 
 TOKEN = open("token.txt","r").readline()
