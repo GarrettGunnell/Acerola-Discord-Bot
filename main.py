@@ -6,7 +6,8 @@ import json
 from collections import defaultdict
 
 acerola_responses = ['nice', 'pog', 'damn that sucks', 'you should get some bitches', 'hell yeah', 'bro', 'bro...', 'kino', 'I love people like you', 
-'No\n https://tenor.com/view/keanu-reeves-john-wick-awesome-gif-18042382', ':eyes:', 'I love Molly Rankin', 'peep my story', 'listen to song']
+'No\n https://tenor.com/view/keanu-reeves-john-wick-awesome-gif-18042382', ':eyes:', 'I love Molly Rankin', 'peep my story', 'listen to song',
+'cringe', 'based']
 help_message = "\
 ```\n\
 !help: \n\
@@ -55,7 +56,8 @@ async def on_message(message):
         return
 
     if content == '!respond':
-        await message.channel.send(random.choice(acerola_responses))
+        responses = random.sample(acerola_responses, 4)
+        await message.channel.send(random.choice(responses))
         return
 
     if content == '!broboard':
