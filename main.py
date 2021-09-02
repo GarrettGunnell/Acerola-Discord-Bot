@@ -66,10 +66,15 @@ async def on_message(message):
         return
 
     if content == '!broboard':
-        leaderboard = json.dumps(bro_leaderboard[server])[1:-1]
-        leaderboard = leaderboard.replace(', ', '\n')
+        sorted_leaderboard = sorted(bro_leaderboard[server].items(), key = lambda x: x[1], reverse=True)
+        sorted_leaderboard = sorted_leaderboard[0:25]
+        
+        leaderboard_string = f"```markdown\n"
+        for i in range(0, len(sorted_leaderboard)):
+            leaderboard_string += f"#{i + 1} {sorted_leaderboard[i][0]}: {sorted_leaderboard[i][1]}\n"
+        leaderboard_string += f"\n```"
 
-        await message.channel.send("```\n" + leaderboard + "\n```")
+        await message.channel.send(leaderboard_string)
         return
 
     if 'bro' in content or 'vro' in content or 'bri' in content:
