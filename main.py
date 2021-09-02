@@ -24,12 +24,16 @@ help_message = "\
 def def_value():
     return 0
 
-bro_leaderboard = defaultdict(def_value)
+def def_dict():
+    return defaultdict(def_value)
+
+bro_leaderboard = defaultdict(def_dict)
 
 with open('broboard.txt') as json_file:
     bro_data = json.load(json_file)
-    for key, value in bro_data.items():
-        bro_leaderboard[key] = value
+    for key in bro_data.keys():
+        for key2, value in bro_data[key].items():
+            bro_leaderboard[key][key2] = value
 
 
 TOKEN = open("token.txt","r").readline()
@@ -47,6 +51,7 @@ async def on_ready():
 async def on_message(message):
     content = message.content.lower()
     user = str(message.author).split('#')[0]
+    server = str(message.guild)
 
     if message.author == client.user:
         return
@@ -61,14 +66,14 @@ async def on_message(message):
         return
 
     if content == '!broboard':
-        leaderboard = json.dumps(bro_leaderboard)[1:-1]
+        leaderboard = json.dumps(bro_leaderboard[server])[1:-1]
         leaderboard = leaderboard.replace(', ', '\n')
 
         await message.channel.send("```\n" + leaderboard + "\n```")
         return
 
     if 'bro' in content or 'vro' in content or 'bri' in content:
-        bro_leaderboard[user] += 1
+        bro_leaderboard[server][user] += 1
         with open('broboard.txt', 'w') as outfile:
             json.dump(bro_leaderboard, outfile)
 
