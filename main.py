@@ -52,10 +52,17 @@ async def on_message(message):
     content = message.content.lower()
     user = str(message.author).split('#')[0]
     server = str(message.guild)
+    id = message.author.id
 
     if message.author == client.user:
         return
-
+    '''
+    if user == "Acerola":
+        await message.channel.send(id)
+        fetched_user = await client.fetch_user(id)
+        fetched_user = str(fetched_user).split('#')[0]
+        await message.channel.send(fetched_user)
+    '''
     if content == '!help':
         await message.channel.send(help_message)
         return
@@ -71,14 +78,18 @@ async def on_message(message):
         
         leaderboard_string = f"```markdown\n"
         for i in range(0, len(sorted_leaderboard)):
-            leaderboard_string += f"#{i + 1} {sorted_leaderboard[i][0]}: {sorted_leaderboard[i][1]}\n"
+            stored_id = sorted_leaderboard[i][0]
+            fetched_user = await client.fetch_user(stored_id)
+            fetched_user = str(fetched_user).split('#')[0]
+
+            leaderboard_string += f"#{i + 1} {fetched_user}: {sorted_leaderboard[i][1]}\n"
         leaderboard_string += f"\n```"
 
         await message.channel.send(leaderboard_string)
         return
 
     if 'bro' in content or 'vro' in content or 'bri' in content:
-        bro_leaderboard[server][user] += 1
+        bro_leaderboard[server][id] += 1
         with open('broboard.txt', 'w') as outfile:
             json.dump(bro_leaderboard, outfile)
 
