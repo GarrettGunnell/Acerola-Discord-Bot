@@ -60,6 +60,7 @@ client = discord.Client(intents = Intents)
 
 def get_tweet():
     newest_tweet = 0
+    channel = client.get_channel(972326727583948820)
     while True:
         tweets_list = api.user_timeline(user_id='Acerola_t', count=1)
 
@@ -67,9 +68,8 @@ def get_tweet():
         tweet_id = tweet.id
         if tweet_id != newest_tweet:
             newest_tweet = tweet_id
-            channel = client.get_channel(972326727583948820)
-
-            client.loop.create_task(channel.send("\thttps://twitter.com/Acerola_t/status/" + str(tweet.id)))
+            if tweet.in_reply_to_screen_name == None:
+                client.loop.create_task(channel.send("\thttps://twitter.com/Acerola_t/status/" + str(tweet.id)))
 
         time.sleep(30)
 
