@@ -2,8 +2,14 @@
 
 import discord
 import random
+import time
 import json
 from collections import defaultdict
+import tweepy
+import threading
+from dotenv import load_dotenv
+from os import environ
+load_dotenv()
 
 acerola_responses = ['nice', 'pog', 'damn that sucks', 'you should get some bitches', 'hell yeah', 'bro', 'bro...', 'kino', 'I love people like you', 
 'No\n https://tenor.com/view/keanu-reeves-john-wick-awesome-gif-18042382', ':eyes:', 'I love Molly Rankin', 'peep my story', 'listen to song',
@@ -20,6 +26,15 @@ help_message = "\
 \tSee who has said bro the most in the server.\
 ```\
 "
+
+consumer_key = environ.get('CONSUMER_KEY')
+consumer_secret = environ.get('CONSUMER_SECRET')
+access_token = environ.get('ACCESS_TOKEN')
+access_token_secret = environ.get('ACCESS_SECRET')
+
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth)
 
 def def_value():
     return 0
@@ -43,9 +58,26 @@ Intents.messages = True
 
 client = discord.Client(intents = Intents)
 
+def get_tweet():
+    newest_tweet = 0
+    while True:
+        tweets_list = api.user_timeline(user_id='Acerola_t', count=1)
+
+        tweet = tweets_list[0]
+        tweet_id = tweet.id
+        if tweet_id != newest_tweet:
+            newest_tweet = tweet_id
+            channel = client.get_channel(972326727583948820)
+
+            client.loop.create_task(channel.send("\thttps://twitter.com/Acerola_t/status/" + str(tweet.id)))
+
+        time.sleep(30)
+
 @client.event
 async def on_ready():
     print('Logged in')
+    x = threading.Thread(target=get_tweet, daemon=True)
+    x.start()
 
 @client.event
 async def on_message(message):
