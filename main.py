@@ -68,7 +68,7 @@ def get_tweet():
         tweet_id = tweet.id
         if tweet_id != newest_tweet:
             newest_tweet = tweet_id
-            if tweet.in_reply_to_screen_name == None:
+            if tweet.in_reply_to_screen_name == None and tweet.referenced_tweets == None:
                 client.loop.create_task(channel.send("\thttps://twitter.com/Acerola_t/status/" + str(tweet.id)))
 
         time.sleep(30)
