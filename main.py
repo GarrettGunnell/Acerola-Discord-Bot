@@ -11,9 +11,9 @@ from dotenv import load_dotenv
 from os import environ
 load_dotenv()
 
-acerola_responses = ['nice', 'pog', 'damn that sucks', 'you should get some bitches', 'hell yeah', 'bro', 'bro...', 'kino', 'I love people like you', 
-'No\n https://tenor.com/view/keanu-reeves-john-wick-awesome-gif-18042382', ':eyes:', 'I love Molly Rankin', 'peep my story', 'listen to song',
-'cringe', 'based']
+acerola_responses = ['nice', 'pog', 'damn that sucks', 'There are more important things :pepeBuddha:', 'hell yeah', 'bro', 'bro...', 'kino', 'I love people like you', 
+'No\n https://tenor.com/view/keanu-reeves-john-wick-awesome-gif-18042382', ':eye:', 'I love Molly Rankin', 'listen to song', ':situation:', ':liminal:', 'have you watched Succession yet',
+'cringe', 'based', "I'm just so tired", "No I do not know when the next video is coming out", "Don't you have better things to do", ":catnod:", ":catnope:", ":awkward:"]
 help_message = "\
 ```\n\
 !help: \n\
