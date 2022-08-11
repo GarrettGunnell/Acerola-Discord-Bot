@@ -11,9 +11,16 @@ from dotenv import load_dotenv
 from os import environ
 load_dotenv()
 
-acerola_responses = ['nice', 'pog', 'damn that sucks', 'There are more important things :pepeBuddha:', 'hell yeah', 'bro', 'bro...', 'kino', 'I love people like you', 
-'No\n https://tenor.com/view/keanu-reeves-john-wick-awesome-gif-18042382', ':eye:', 'I love Molly Rankin', 'listen to song', ':situation:', ':liminal:', 'have you watched Succession yet',
-'cringe', 'based', "I'm just so tired", "No I do not know when the next video is coming out", "Don't you have better things to do", ":catnod:", ":catnope:", ":awkward:"]
+acerolaObj = open("acerola_responses.txt", "r")
+acerola_responses = acerolaObj.read().splitlines()
+acerolaObj.close()
+
+def acerola_add(message):
+    acerola_responses.append(message)
+    content = '\n'.join(acerola_responses)
+    acerolaObj.write(content)
+    acerolaObj.close()
+
 help_message = "\
 ```\n\
 !help: \n\
@@ -76,8 +83,8 @@ def get_tweet():
 @client.event
 async def on_ready():
     print('Logged in')
-    x = threading.Thread(target=get_tweet, daemon=True)
-    x.start()
+    # x = threading.Thread(target=get_tweet, daemon=True)
+    # x.start()
 
 @client.event
 async def on_message(message):
@@ -125,5 +132,7 @@ async def on_message(message):
         with open('broboard.txt', 'w') as outfile:
             json.dump(bro_leaderboard, outfile)
 
-    
+    if id == '118542079663013889' and content.startswith("!") is False:
+        acerola_add(message.content)
+        print("adding message to acerola_responses:" + message.content)
 client.run(TOKEN)
